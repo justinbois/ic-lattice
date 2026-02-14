@@ -74,7 +74,7 @@ ruff = ">=0.1"
 
 [tool.pixi.feature.publish.dependencies]
 twine = ">=5"
-build = ">=1"
+python-build = ">=1"
 
 [tool.pixi.environments]
 default = { solve-group = "default" }
