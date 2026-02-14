@@ -10,9 +10,9 @@ readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.9"
 authors = [
-    {name = "Your Name", email = "your.email@example.com"},
+    {name = "Justin Bois", email = "bois@caltech.edu"},
 ]
-keywords = ["monte-carlo", "simulation", "lattice", "physics", "statistical-mechanics"]
+keywords = ["monte-carlo", "educational", "simulation", "lattice", "physics", "statistical-mechanics"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
@@ -38,13 +38,10 @@ dev = [
     "ruff>=0.1.0",
 ]
 
-[project.scripts]
-ic-lattice = "ic_lattice.__main__:main"
-
 [project.urls]
-Homepage = "https://github.com/yourusername/ic-lattice"
-Repository = "https://github.com/yourusername/ic-lattice"
-Issues = "https://github.com/yourusername/ic-lattice/issues"
+Homepage = "https://github.com/justinbois/ic-lattice"
+Repository = "https://github.com/justinbois/ic-lattice"
+Issues = "https://github.com/justinbois/ic-lattice/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ic_lattice"]
@@ -57,6 +54,41 @@ include = [
     "/pyproject.toml",
 ]
 
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "osx-64", "linux-64"]
+
+[tool.pixi.dependencies]
+python = ">=3.9"
+numpy = ">=1.20"
+numba = ">=0.55"
+
+[tool.pixi.pypi-dependencies]
+ic-lattice = { path = ".", editable = true }
+
+[tool.pixi.feature.dev.dependencies]
+pytest = ">=7"
+pytest-cov = ">=4"
+black = ">=23"
+ruff = ">=0.1"
+
+[tool.pixi.feature.publish.dependencies]
+twine = ">=5"
+build = ">=1"
+
+[tool.pixi.environments]
+default = { solve-group = "default" }
+dev = { features = ["dev"], solve-group = "default" }
+publish = { features = ["publish"], solve-group = "default" }
+
+[tool.pixi.tasks]
+test = "pytest"
+
+[tool.pixi.feature.publish.tasks]
+build-dist = "python -m build"
+publish-test = { cmd = "twine upload --repository testpypi dist/*", depends-on = ["build-dist"] }
+publish = { cmd = "twine upload dist/*", depends-on = ["build-dist"] }
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
@@ -64,11 +96,11 @@ python_classes = ["Test*"]
 python_functions = ["test_*"]
 
 [tool.black]
-line-length = 100
+line-length = 88
 target-version = ['py39']
 
 [tool.ruff]
-line-length = 100
+line-length = 88
 target-version = "py39"
 select = [
     "E",  # pycodestyle errors
