@@ -1,6 +1,6 @@
 # ic_lattice
 
-Monte Carlo lattice simulation for A-B molecule interactions on a 2D lattice.
+Monte Carlo lattice simulation for A-B molecule interactions on a 2D lattice. This is an educational package meant for use in Caltech's Integrated Core.
 
 ## Description
 
